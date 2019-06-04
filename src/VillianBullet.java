@@ -1,17 +1,21 @@
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
 
 import javax.swing.JComponent;
 
-public class Bullet extends JComponent
+public class VillianBullet extends JComponent
 {
 	private int dY;
 	private int dX;
 	private Ellipse2D bullet; 
 	private boolean kill;
 	
-	public Bullet(Player a)
+	public VillianBullet(Villian a)
 	{
-		this.setLocation(a.getX(), a.getY());
+		this.setLocation(a.getX(),a.getY());
 		this.setSize(50,50);
 		bullet = new Ellipse2D.Double(25,0,25,25);
 	}
