@@ -28,7 +28,7 @@ public class Game extends JFrame implements KeyListener
 {
 	final static int screenHeight = 1700;
 	final static int screenWidth = 1500;
-	private int point;
+	private int points;
 	JLabel pointNum = new JLabel("");
 	
 	public Game()
@@ -102,6 +102,12 @@ public class Game extends JFrame implements KeyListener
 	public void setPoints(int p)
 	{
 		pointNum.setText("p");
+	}
+	
+	public void updatePoints()
+	{
+		points += 10;
+		setPoints(points);
 	}
 
 }
