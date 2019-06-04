@@ -5,6 +5,7 @@
  */
 
 //Input
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,6 +23,8 @@ import javax.swing.JLabel;
 //Utils
 import java.util.ArrayList;
 import javax.swing.Timer;
+
+
 import javax.imageio.ImageIO;
 
 public class Game extends JFrame implements KeyListener
@@ -37,34 +40,42 @@ public class Game extends JFrame implements KeyListener
 		setBounds(200, 100, screenHeight, screenWidth);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
+		getContentPane().setBackground(Color.black);
 		
 		JLabel points = new JLabel("pts:");
-		points.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 34));
+		points.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 34));
+		points.setForeground(Color.white);
 		points.setBounds(5, 5, 100, 50);
 		add(points);
 		
 		pointNum.setBounds(105,0, 100, 50);
-		pointNum.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 24));
+		pointNum.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 34));
+		pointNum.setForeground(Color.white);
+		
 		add(pointNum);
 		
 		BufferedImage a = null;
-		try {a = ImageIO.read(new File("Rocket.png"));} 
+		try {a = ImageIO.read(new File("RocketSadBlack.png"));
+		System.out.println(new File("Rocket.png").getAbsolutePath());} 
 		catch (IOException e) {e.printStackTrace();}
 		
 		JLabel life1 = new JLabel(new ImageIcon(a));
-		life1.setBounds(340, 5, 50, 70);
+		life1.setBounds(1185, 5, 100, 100);
 		add(life1);
 		life1.setVisible(true);
 		
 		JLabel life2 = new JLabel(new ImageIcon(a));
-		life2.setBounds(395, 5, 50, 70);
+		life2.setBounds(1290, 5,100, 100);
 		add(life2);
 		life2.setVisible(true);
 		
 		JLabel life3 = new JLabel(new ImageIcon(a));
-		life3.setBounds(450, 5, 50, 70);
+		life3.setBounds(1395, 5, 100, 100);
 		add(life3);
 		life3.setVisible(true);
+
+		repaint();
+		revalidate();
 		
 //		timer.start();
 //		addKeyListener(this);
@@ -88,7 +99,8 @@ public class Game extends JFrame implements KeyListener
 	}
 
 	@Override
-	public void keyReleased(KeyEvent e) {
+	public void keyReleased(KeyEvent e) 
+	{
 		// TODO Auto-generated method stub
 		
 	}
