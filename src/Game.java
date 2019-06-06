@@ -83,8 +83,7 @@ public class Game extends JFrame implements KeyListener
 		block3 = new Blocks(1050,1100);
 		add(block3);
 		
-		rocket = new Player(5);
-		rocket.setBounds(100, 100, 50, 100);
+		rocket = new Player(5,1295);
 		add(rocket);
 		
 		repaint();

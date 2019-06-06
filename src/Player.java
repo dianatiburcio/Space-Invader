@@ -17,10 +17,10 @@ public class Player extends JComponent
 	
 	private Bullet bullet;
 	
-	public Player(int y) 
+	public Player(int x, int y) 
 	{
 		isAlive = true;
-		int inY = y;
+		setBounds(x, y, 100,100);
 	}
 	
 	public void fireBullet()
