@@ -38,7 +38,8 @@ public class Player extends JComponent
 	public void paintComponent(Graphics g)
 	{
 		Graphics2D g2 = (Graphics2D) g;	
-		try {BufferedImage image = ImageIO.read(getClass().getResourceAsStream("RocketSadBlackUp.png"));} 
+		try {BufferedImage image = ImageIO.read(getClass().getResourceAsStream("RocketSadBlackUp.png"));
+		g2.drawImage(image, 0, 0, null);} 
 		catch (IOException e) {e.printStackTrace();}
 		
 	}

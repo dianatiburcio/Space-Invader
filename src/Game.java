@@ -29,8 +29,8 @@ import javax.imageio.ImageIO;
 
 public class Game extends JFrame implements KeyListener
 {
-	final static int screenHeight = 1700;
-	final static int screenWidth = 1400;
+	final static int screenHeight = 1600;
+	final static int screenWidth = 1500;
 	private int point;
 	private Blocks block1;
 	private Blocks block2;
@@ -84,6 +84,7 @@ public class Game extends JFrame implements KeyListener
 		add(block3);
 		
 		rocket = new Player(5);
+		rocket.setBounds(100, 100, 50, 100);
 		add(rocket);
 		
 		repaint();
@@ -96,7 +97,6 @@ public class Game extends JFrame implements KeyListener
 		
 		
 //		timer.start();
-//		addKeyListener(this);
 		
 		System.out.println(getClass());
 		getClass().getResourceAsStream("/");
