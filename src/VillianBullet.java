@@ -19,6 +19,7 @@ public class VillianBullet extends JComponent
 		this.setSize(50,50);
 		bullet = new Ellipse2D.Double(25,0,25,25);
 	}
+	
 	public void setDx(int x)
 	{
 		dX = x; 

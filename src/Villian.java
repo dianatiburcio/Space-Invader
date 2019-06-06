@@ -32,17 +32,17 @@ public class Villian extends JComponent
 		Graphics2D g2 = (Graphics2D) g;
 		if(villianNum == 1)
 		{	
-			try {BufferedImage image = ImageIO.read(getClass().getResourceAsStream("villian1.png"));} 
+			try {BufferedImage image = ImageIO.read(getClass().getResourceAsStream("villian1BS.png"));} 
 			catch (IOException e) {e.printStackTrace();}
 		}
 		else if(villianNum == 3)
 		{
-			try {BufferedImage image = ImageIO.read(getClass().getResourceAsStream("villian3.png"));} 
+			try {BufferedImage image = ImageIO.read(getClass().getResourceAsStream("villian3BS.png"));} 
 			catch (IOException e) {e.printStackTrace();}
 		}
 		else if(villianNum == 2)
 		{
-			try {BufferedImage image = ImageIO.read(getClass().getResourceAsStream("villian2.png"));} 
+			try {BufferedImage image = ImageIO.read(getClass().getResourceAsStream("villian2BS.png"));} 
 			catch (IOException e) {e.printStackTrace();}
 		}
 	}

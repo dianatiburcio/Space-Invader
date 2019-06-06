@@ -27,12 +27,17 @@ import javax.swing.Timer;
 
 import javax.imageio.ImageIO;
 
-public class Game extends JFrame implements KeyListener
+public class Game extends JFrame implements ActionListener
 {
 	final static int screenHeight = 1700;
-	final static int screenWidth = 1500;
+	final static int screenWidth = 1400;
 	private int point;
+	private Blocks block1;
+	private Blocks block2;
+	private Blocks block3;
+	private Player rocket;
 	JLabel pointNum = new JLabel("");
+
 	
 	public Game()
 	{
@@ -62,58 +67,77 @@ public class Game extends JFrame implements KeyListener
 		JLabel life1 = new JLabel(new ImageIcon(a));
 		life1.setBounds(1185, 5, 100, 100);
 		add(life1);
-		life1.setVisible(true);
 		
 		JLabel life2 = new JLabel(new ImageIcon(a));
 		life2.setBounds(1290, 5,100, 100);
 		add(life2);
-		life2.setVisible(true);
 		
 		JLabel life3 = new JLabel(new ImageIcon(a));
 		life3.setBounds(1395, 5, 100, 100);
 		add(life3);
-		life3.setVisible(true);
 
+		block1 = new Blocks(150,1100);
+		add(block1);
+		block2 = new Blocks(600, 1100);
+		add(block2);
+		block3 = new Blocks(1050,1100);
+		add(block3);
+		
+		rocket = new Player(5);
+		add(rocket);
+		
 		repaint();
 		revalidate();
+		
+		if(!rocket.isAlive)
+		{
+			
+		}
+		
 		
 //		timer.start();
 //		addKeyListener(this);
 		
 		System.out.println(getClass());
 		getClass().getResourceAsStream("/");
-	}
 
-	@Override
-	public void keyPressed(KeyEvent e)
+	this.addKeyListener(new KeyListener() 
 	{
-		switch (e.getKeyCode()) {
-			case KeyEvent.VK_LEFT:
-				//shift left
-				break;
-				
-			case KeyEvent.VK_RIGHT:
-				//shift right
-				break;
+		public void keyTyped(KeyEvent eP)
+		{}
+		public void keyPressed(KeyEvent eT) 
+		{
+			if (eT.getKeyCode() == KeyEvent.VK_LEFT)
+			{
+				rocket.setDx(-5);
+			}
+			if (eT.getKeyCode() == KeyEvent.VK_RIGHT)
+			{
+				rocket.setDx(5);
+			}
+			if (eT.getKeyCode() == KeyEvent.VK_SPACE)
+			{
+				rocket.fireBullet();
+			}
 		}
+		public void keyReleased(KeyEvent eT) 
+		{
+			if (eT.getKeyCode() == KeyEvent.VK_LEFT)
+			{
+				rocket.setDx(0);;
+			}
+			if (eT.getKeyCode() == KeyEvent.VK_RIGHT)
+			{
+				rocket.setDx(0);
+			}
+		}
+	});
 	}
-
-	@Override
-	public void keyReleased(KeyEvent e) 
-	{
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 	
 	public void setPoints(int p)
 	{
-		pointNum.setText("p");
+		pointNum.setText("" + rocket.getPoints());
 	}
 
 }

@@ -11,36 +11,60 @@ public class Player extends JComponent
 {
 	boolean isAlive;
 	private BufferedImage image;
-	private int x;
-	private int y;
+	private int dX;
+	private int inY;
+	private int points;
 	
-	private ArrayList<Bullet> bullets;
+	private Bullet bullet;
 	
-	public Player() throws IOException
+	public Player(int y) 
 	{
-		//Set up player in middle of screen
 		isAlive = true;
-		x = Game.screenWidth / 2;
-		y =  20;
-		
-		bullets = new ArrayList<Bullet>();
-		image = loadPlayerImage();
+		int inY = y;
 	}
 	
 	public void fireBullet()
 	{
-		bullets.add(new Bullet());
+		bullet = new Bullet(this);
+		bullet.setDy(5);
+		bullet.setDx(0);
 	}
 	
 	private BufferedImage loadPlayerImage() throws IOException
 	{
-		 return ImageIO.read(getClass().getResource("/assets/player.png"));
-	};
+		 return ImageIO.read(getClass().getResource("RocketSadBlackUp.png"));
+	}
 	
 	public void paintComponent(Graphics g)
 	{
-		Graphics2D g2 = (Graphics2D)g;
-		g2.drawImage(image, 0, 0, image.getWidth(), image.getHeight(), null);
+		Graphics2D g2 = (Graphics2D) g;	
+		try {BufferedImage image = ImageIO.read(getClass().getResourceAsStream("RocketSadBlackUp.png"));} 
+		catch (IOException e) {e.printStackTrace();}
+		
 	}
 	
+	public void addPoints(int a)
+	{
+		points += a;
+	}
+	
+	public int getPoints()
+	{
+		return points;
+	}
+	
+	public void setDx(int x)
+	{
+		dX = x; 
+	}
+	
+	public boolean bulletHit(int x, int y)
+	{
+		return bullet.hit(x, y);
+	}
+	
+	public void update()
+	{
+		this.setLocation(this.getX() + dX, inY); 
+	}
 }
