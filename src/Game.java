@@ -27,7 +27,7 @@ import javax.swing.Timer;
 
 import javax.imageio.ImageIO;
 
-public class Game extends JFrame implements ActionListener
+public class Game extends JFrame implements KeyListener
 {
 	final static int screenHeight = 1700;
 	final static int screenWidth = 1400;
@@ -100,44 +100,45 @@ public class Game extends JFrame implements ActionListener
 		
 		System.out.println(getClass());
 		getClass().getResourceAsStream("/");
-
-	this.addKeyListener(new KeyListener() 
-	{
-		public void keyTyped(KeyEvent eP)
-		{}
-		public void keyPressed(KeyEvent eT) 
-		{
-			if (eT.getKeyCode() == KeyEvent.VK_LEFT)
-			{
-				rocket.setDx(-5);
-			}
-			if (eT.getKeyCode() == KeyEvent.VK_RIGHT)
-			{
-				rocket.setDx(5);
-			}
-			if (eT.getKeyCode() == KeyEvent.VK_SPACE)
-			{
-				rocket.fireBullet();
-			}
-		}
-		public void keyReleased(KeyEvent eT) 
-		{
-			if (eT.getKeyCode() == KeyEvent.VK_LEFT)
-			{
-				rocket.setDx(0);;
-			}
-			if (eT.getKeyCode() == KeyEvent.VK_RIGHT)
-			{
-				rocket.setDx(0);
-			}
-		}
-	});
 	}
-	
-	
+
 	public void setPoints(int p)
 	{
 		pointNum.setText("" + rocket.getPoints());
+	}
+
+
+	@Override
+	public void keyPressed(KeyEvent arg0) 
+	{}
+	@Override
+	public void keyReleased(KeyEvent eT) 
+	{
+		if (eT.getKeyCode() == KeyEvent.VK_LEFT)
+		{
+			rocket.setDx(-5);
+		}
+		if (eT.getKeyCode() == KeyEvent.VK_RIGHT)
+		{
+			rocket.setDx(5);
+		}
+		if (eT.getKeyCode() == KeyEvent.VK_SPACE)
+		{
+			rocket.fireBullet();
+		}
+		
+	}
+	@Override
+	public void keyTyped(KeyEvent eT) 
+	{
+		if (eT.getKeyCode() == KeyEvent.VK_LEFT)
+		{
+			rocket.setDx(0);;
+		}
+		if (eT.getKeyCode() == KeyEvent.VK_RIGHT)
+		{
+			rocket.setDx(0);
+		}
 	}
 
 }
