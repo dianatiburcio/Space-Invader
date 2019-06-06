@@ -36,6 +36,7 @@ public class Game extends JFrame implements KeyListener
 	private Blocks block2;
 	private Blocks block3;
 	private Player rocket;
+	private int points;
 	JLabel pointNum = new JLabel("");
 
 	
@@ -95,6 +96,8 @@ public class Game extends JFrame implements KeyListener
 		}
 		
 		
+		VillianManager villianManager = new VillianManager(this);
+		
 //		timer.start();
 		
 		System.out.println(getClass());
@@ -138,6 +141,12 @@ public class Game extends JFrame implements KeyListener
 		{
 			rocket.setDx(0);
 		}
+	}
+	
+	public void updatePoints()
+	{
+		points += 10;
+		setPoints(points);
 	}
 
 }
