@@ -66,6 +66,8 @@ public class Game extends JFrame implements KeyListener
 		add(life3);
 		life3.setVisible(true);
 		
+		VillianManager villianManager = new VillianManager(this);
+		
 //		timer.start();
 //		addKeyListener(this);
 		

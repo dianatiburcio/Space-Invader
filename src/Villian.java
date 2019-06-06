@@ -12,38 +12,50 @@ public class Villian extends JComponent
 	private int dX;
 	private int dY;
 	private int point;
-	private int villianNum;
+	private VillianType villianType;
 	private boolean alive;
 	private int move = 2; 
 	private int before;
 	
-	public Villian(int x, int y, int pNum, int image)
+	public enum VillianType
+	{
+		SQUID, FOURLEGGED, METROID
+	}
+	
+	public Villian(int x, int y, int pNum, VillianType villianType)
 	{
 		dX = 0;
 		dY = 0;
 		this.setLocation(x,y);
 		point = pNum;
-		villianNum = image;
+		this.villianType = villianType;
 		alive = true; 
 	}
 	
 	public void paintComponent(Graphics g)
 	{
 		Graphics2D g2 = (Graphics2D) g;
-		if(villianNum == 1)
-		{	
-			try {BufferedImage image = ImageIO.read(getClass().getResourceAsStream("villian1.png"));} 
-			catch (IOException e) {e.printStackTrace();}
-		}
-		else if(villianNum == 3)
+		
+		switch(villianType)
 		{
-			try {BufferedImage image = ImageIO.read(getClass().getResourceAsStream("villian3.png"));} 
-			catch (IOException e) {e.printStackTrace();}
-		}
-		else if(villianNum == 2)
-		{
-			try {BufferedImage image = ImageIO.read(getClass().getResourceAsStream("villian2.png"));} 
-			catch (IOException e) {e.printStackTrace();}
+			case SQUID:
+				try {BufferedImage image = ImageIO.read(getClass().getResourceAsStream("villian1.png"));} 
+				catch (IOException e) {e.printStackTrace();}
+				break;
+				
+			case FOURLEGGED:
+				try {BufferedImage image = ImageIO.read(getClass().getResourceAsStream("villian2.png"));} 
+				catch (IOException e) {e.printStackTrace();}
+				break;
+				
+			case METROID:
+				try {BufferedImage image = ImageIO.read(getClass().getResourceAsStream("villian3.png"));} 
+				catch (IOException e) {e.printStackTrace();}
+				break;
+			
+			default:
+				System.out.println("Villian doesn't have a type!");
+				break;
 		}
 	}
 	

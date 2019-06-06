@@ -29,7 +29,7 @@ public class Player extends JComponent
 	
 	public void fireBullet()
 	{
-		bullets.add(new Bullet());
+		bullets.add(new Bullet(this));
 	}
 	
 	private BufferedImage loadPlayerImage() throws IOException

@@ -1,35 +1,54 @@
-
 public class VillianManager
 {
 	Villian[][] villians;
 	boolean moveLeft;
 	boolean moveRight;
+	Game game;
 	
-	public VillianManager()
+	public VillianManager(Game game)
 	{
 		Villian[][] villians = new Villian[5][11];
+		this.game = game;
+		
+		int x = 30;
 		
 		//back row
-		for(int i = 0; i < villians[0].length; i++)
+		for(int i = 0; i < 2; i++)
 		{
-			villians[0][i] = new Villian(stuff);
+			for(int j = 0; j < villians[i].length - 1; i++)
+			{
+				villians[i][j] = new Villian(x, 60, 10, Villian.VillianType.SQUID);
+				x += 30;
+			}
 		}
+		
+		x = 30;
 		
 		//middle 2 rows
 		for(int i = 1; i < 3; i++)
 		{
-			for(int j = 0; j < villians[i].length; i++)
+			for(int j = 0; j < villians[i].length - 1; i++)
 			{
-				villians[i][j] = new Villian(stuff);
+				villians[i][j] = new Villian(x, 90, 10, Villian.VillianType.FOURLEGGED);
 			}
 		}
 		
+		x = 30;
+
 		//front 2 rows
 		for(int i = 3; i < 5; i++)
 		{
-			for(int j = 0; j < villians[i].length; i++)
+			for(int j = 0; j < villians[i].length - 1; i++)
 			{
-				villians[i][j] = new Villian(stuff);
+				villians[i][j] = new Villian(x, 120, 10, Villian.VillianType.METROID);
+			}
+		}
+		
+		for(int i = 0; i < villians.length; i++)
+		{
+			for(int j = 0; j < villians[i].length; j++)
+			{
+				game.add(villians[i][j]);
 			}
 		}
 	}
@@ -92,6 +111,8 @@ public class VillianManager
 				}
 			}
 		}
+		
+		return false;
 	}
 	
 	public boolean isPastRightWall(int column)
@@ -107,15 +128,28 @@ public class VillianManager
 				}
 			}
 		}
+		
+		return false;
 	}
 	
-	/*
-	 * Returns amount of points gained from villian type killed
-	 */
-	public int KillVillian(int row, int column)
+	public void shiftDown()
 	{
-		int points;
+		for(int i = 0; i < villians.length; i++)
+		{
+			for(int j = 0; j < villians[i].length; j++)
+			{
+				if(villians[i][j] != null)
+				{
+					villians[i][j].setDy(10);
+				}
+			}
+		}
+	}
+	
+	public void KillVillian(int row, int column)
+	{
+		int points = 10;
 		
-		Game.updatePoints(points);
+		game.updatePoints();
 	}
 }
