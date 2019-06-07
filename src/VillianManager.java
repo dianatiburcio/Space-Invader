@@ -8,7 +8,7 @@ public class VillianManager
 	
 	public VillianManager(Game game)
 	{
-		Villian[][] villians = new Villian[5][11];
+		villians = new Villian[5][11];
 		this.game = game;
 		
 		int x = 30;
@@ -16,7 +16,7 @@ public class VillianManager
 		//back row
 		for(int i = 0; i < 2; i++)
 		{
-			for(int j = 0; j < villians[i].length - 1; i++)
+			for(int j = 0; j < villians[i].length; j++)
 			{
 				villians[i][j] = new Villian(x, 60, 100, Villian.VillianType.SQUID);
 				x += 30;
@@ -28,7 +28,7 @@ public class VillianManager
 		//middle 2 rows
 		for(int i = 1; i < 3; i++)
 		{
-			for(int j = 0; j < villians[i].length - 1; i++)
+			for(int j = 0; j < villians[i].length; j++)
 			{
 				villians[i][j] = new Villian(x, 90, 50, Villian.VillianType.FOURLEGGED);
 			}
@@ -37,9 +37,9 @@ public class VillianManager
 		x = 30;
 
 		//front 2 rows
-		for(int i = 3; i < 5; i++)
+		for(int i = 2; i < 5; i++)
 		{
-			for(int j = 0; j < villians[i].length - 1; i++)
+			for(int j = 0; j < villians[i].length; j++)
 			{
 				villians[i][j] = new Villian(x, 120, 25, Villian.VillianType.METROID);
 			}
@@ -49,7 +49,8 @@ public class VillianManager
 		{
 			for(int j = 0; j < villians[i].length; j++)
 			{
-				game.add(villians[i][j]);
+				System.out.println("i=" + i + " j=" + j);
+					game.add(villians[i][j]);
 			}
 		}
 	}

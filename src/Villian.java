@@ -28,6 +28,7 @@ public class Villian extends JComponent
 		dX = 0;
 		dY = 0;
 		this.setLocation(x,y);
+		setSize(100, 100);
 		point = pNum;
 		this.villianType = villianType;
 		alive = true; 
