@@ -13,7 +13,7 @@ public class VillianBullet extends JComponent
 	private Ellipse2D bullet; 
 	private boolean kill;
 	
-	public VillianBullet(Villian a)
+	public VillianBullet(JComponent a)
 	{
 		this.setLocation(a.getX(),a.getY());
 		this.setSize(50,50);

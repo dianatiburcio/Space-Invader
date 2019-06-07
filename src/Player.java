@@ -21,6 +21,7 @@ public class Player extends JComponent
 	{
 		isAlive = true;
 		setBounds(x, y, 100,100);
+		inY = y;
 	}
 	
 	public void fireBullet()
@@ -59,6 +60,11 @@ public class Player extends JComponent
 		dX = x; 
 	}
 	
+	public int getDx()
+	{
+		return dX;
+	}
+	
 	public boolean bulletHit(int x, int y)
 	{
 		return bullet.hit(x, y);
@@ -66,6 +72,7 @@ public class Player extends JComponent
 	
 	public void update()
 	{
-		this.setLocation(this.getX() + dX, inY); 
+		this.setLocation(this.getX() + dX, inY);
+		System.out.print(this.getDx() + this.getX());
 	}
 }

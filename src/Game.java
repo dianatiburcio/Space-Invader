@@ -27,7 +27,7 @@ import javax.swing.Timer;
 
 import javax.imageio.ImageIO;
 
-public class Game extends JFrame implements KeyListener
+public class Game extends JFrame implements KeyListener, ActionListener
 {
 	final static int screenHeight = 1600;
 	final static int screenWidth = 1500;
@@ -37,8 +37,9 @@ public class Game extends JFrame implements KeyListener
 	private Blocks block3;
 	private Player rocket;
 	private int points;
+	private Bullet pew;
+	private ArrayList<Bullet> pewpew = new ArrayList<Bullet>();
 	JLabel pointNum = new JLabel("");
-
 	
 	public Game()
 	{
@@ -87,66 +88,87 @@ public class Game extends JFrame implements KeyListener
 		rocket = new Player(5,1295);
 		add(rocket);
 		
+		this.addKeyListener(new KeyListener() 
+		{
+			public void keyTyped(KeyEvent eT) 
+			{}
+			public void keyPressed(KeyEvent eT) 
+			{
+				if (eT.getKeyCode() == KeyEvent.VK_LEFT)
+				{
+					rocket.setDx(-5);
+				}
+				if (eT.getKeyCode() == KeyEvent.VK_RIGHT)
+				{
+					rocket.setDx(5);
+				}
+				if (eT.getKeyCode() == KeyEvent.VK_SPACE)
+				{
+					pew = new Bullet(rocket);
+					pewpew.add(pew);
+					add(pew);
+				}
+			}
+			
+			public void keyReleased(KeyEvent eT) 
+			{
+				if (eT.getKeyCode() == KeyEvent.VK_LEFT)
+				{
+					rocket.setDx(0);
+				}
+				if (eT.getKeyCode() == KeyEvent.VK_RIGHT)
+				{
+					rocket.setDx(0);
+				}
+			}
+		});
+//		VillianManager villianManager = new VillianManager(this);
+		
+		Timer t = new Timer(10,this);
+		t.start();
+		
 		repaint();
 		revalidate();
 		
-		if(!rocket.isAlive)
-		{
-			
-		}
-		
-		
-		VillianManager villianManager = new VillianManager(this);
-		
-//		timer.start();
-		
 		System.out.println(getClass());
 		getClass().getResourceAsStream("/");
-	}
-
-	public void setPoints(int p)
-	{
-		pointNum.setText("" + rocket.getPoints());
-	}
-
-
-	@Override
-	public void keyPressed(KeyEvent arg0) 
-	{}
-	@Override
-	public void keyReleased(KeyEvent eT) 
-	{
-		if (eT.getKeyCode() == KeyEvent.VK_LEFT)
-		{
-			rocket.setDx(-5);
-		}
-		if (eT.getKeyCode() == KeyEvent.VK_RIGHT)
-		{
-			rocket.setDx(5);
-		}
-		if (eT.getKeyCode() == KeyEvent.VK_SPACE)
-		{
-			rocket.fireBullet();
-		}
 		
+		this.setVisible(true);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
-	@Override
-	public void keyTyped(KeyEvent eT) 
-	{
-		if (eT.getKeyCode() == KeyEvent.VK_LEFT)
-		{
-			rocket.setDx(0);;
-		}
-		if (eT.getKeyCode() == KeyEvent.VK_RIGHT)
-		{
-			rocket.setDx(0);
-		}
-	}
-	
+
 	public void updatePoints()
 	{
 		points += 10;
 		setPoints(points);
 	}
+	
+	public void setPoints(int p)
+	{pointNum.setText("" + rocket.getPoints());}
+	
+	public void actionPerformed(ActionEvent arg0) 
+	{
+		
+		if(rocket.getX()+rocket.getDx()>= 0 && rocket.getX()+rocket.getDx()<= this.getWidth()-rocket.getWidth())
+			rocket.update();
+		if(!pewpew.isEmpty())
+		{
+			for(int i = 0; i<pewpew.size(); i++)
+			{
+				pewpew.get(i).update();
+				if(pewpew.get(i).getY() > this.getHeight())
+				{
+					remove(pewpew.get(i));
+					pewpew.remove(i);
+				}	
+			}
+		}
+		
+		repaint();
+	}
+
+	public void keyPressed(KeyEvent e) {}
+	public void keyReleased(KeyEvent e) {}
+	public void keyTyped(KeyEvent e) {}
 
 }

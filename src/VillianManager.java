@@ -4,6 +4,7 @@ public class VillianManager
 	boolean moveLeft;
 	boolean moveRight;
 	Game game;
+	private boolean alive = true;
 	
 	public VillianManager(Game game)
 	{
@@ -17,7 +18,7 @@ public class VillianManager
 		{
 			for(int j = 0; j < villians[i].length - 1; i++)
 			{
-				villians[i][j] = new Villian(x, 60, 10, Villian.VillianType.SQUID);
+				villians[i][j] = new Villian(x, 60, 100, Villian.VillianType.SQUID);
 				x += 30;
 			}
 		}
@@ -29,7 +30,7 @@ public class VillianManager
 		{
 			for(int j = 0; j < villians[i].length - 1; i++)
 			{
-				villians[i][j] = new Villian(x, 90, 10, Villian.VillianType.FOURLEGGED);
+				villians[i][j] = new Villian(x, 90, 50, Villian.VillianType.FOURLEGGED);
 			}
 		}
 		
@@ -40,7 +41,7 @@ public class VillianManager
 		{
 			for(int j = 0; j < villians[i].length - 1; i++)
 			{
-				villians[i][j] = new Villian(x, 120, 10, Villian.VillianType.METROID);
+				villians[i][j] = new Villian(x, 120, 25, Villian.VillianType.METROID);
 			}
 		}
 		
@@ -146,10 +147,23 @@ public class VillianManager
 		}
 	}
 	
-	public void KillVillian(int row, int column)
+	public void KillVillian(Bullet pew)
 	{
-		int points = 10;
-		
+		for(int i = 0; i<villians.length; i++)
+		{
+			for(int j = 0; j<villians[0].length; j++)
+			{
+				if(pew.getX() > villians[i][j].getX() && pew.getX() < villians[i][j].getX()+villians[i][j].getWidth() && pew.getY() < villians[i][j].getY() && pew.getX() < villians[i][j].getY()+villians[i][j].getHeight())
+				{
+					alive = false;
+				}
+			}
+		}
 		game.updatePoints();
+	}
+	
+	public void update()
+	{
+		
 	}
 }
