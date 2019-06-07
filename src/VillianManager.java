@@ -5,6 +5,7 @@ public class VillianManager
 	boolean moveRight;
 	Game game;
 	private boolean alive = true;
+	int guess = 6;
 	
 	public VillianManager(Game game)
 	{
