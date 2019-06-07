@@ -5,6 +5,7 @@ public class VillianManager
 	boolean moveRight;
 	Game game;
 	private boolean alive = true;
+	int guess = 6;
 	
 	public VillianManager(Game game)
 	{
@@ -142,6 +143,20 @@ public class VillianManager
 				if(villians[i][j] != null)
 				{
 					villians[i][j].setDy(10);
+				}
+			}
+		}
+	}
+	
+	public Villian getVilShoot()
+	{
+		for(int i = 0; i<villians.length; i++)
+		{
+			for(int j = 0; j<villians[0].length; j++)
+			{
+				if((int) ((Math.random()*10)+1) == guess)
+				{
+					return villians[i][j];
 				}
 			}
 		}

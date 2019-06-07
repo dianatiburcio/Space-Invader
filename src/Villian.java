@@ -17,6 +17,7 @@ public class Villian extends JComponent
 	private int move = 2; 
 	private int before;
 	private int villianNum;
+	private Bullet pew;
 	
 	public enum VillianType
 	{
