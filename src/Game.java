@@ -122,7 +122,8 @@ public class Game extends JFrame implements KeyListener, ActionListener
 				}
 			}
 		});
-//		VillianManager villianManager = new VillianManager(this);
+		
+		VillianManager villianManager = new VillianManager(this);
 		
 		Timer t = new Timer(10,this);
 		t.start();
