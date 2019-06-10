@@ -28,8 +28,9 @@ public class Villian extends JComponent
 	{
 		dX = 0;
 		dY = 0;
-		this.setLocation(x,y);
-		setSize(100, 100);
+		setBounds(x, y, 100, 100);
+//		this.setLocation(x,y);
+//		setSize(100, 100);
 		point = pNum;
 		this.villianType = villianType;
 		alive = true; 
@@ -82,6 +83,11 @@ public class Villian extends JComponent
 	{
 		dY = y;
 		before = this.getY();
+	}
+	
+	public void fire()
+	{
+		
 	}
 	
 	public void update()

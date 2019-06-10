@@ -12,37 +12,39 @@ public class VillianManager
 		villians = new Villian[5][11];
 		this.game = game;
 		
-		int x = 30;
+		int x = game.screenCrop;
 		
 		//back row
 		for(int i = 0; i < 2; i++)
 		{
 			for(int j = 0; j < villians[i].length; j++)
 			{
-				villians[i][j] = new Villian(x, 60, 100, Villian.VillianType.SQUID);
-				x += 30;
+				villians[i][j] = new Villian(x, (game.screenHeight / 32) * 6, 100, Villian.VillianType.SQUID);
+				x += 100;
 			}
 		}
 		
-		x = 30;
+		x = game.screenCrop;
 		
 		//middle 2 rows
 		for(int i = 1; i < 3; i++)
 		{
 			for(int j = 0; j < villians[i].length; j++)
 			{
-				villians[i][j] = new Villian(x, 90, 50, Villian.VillianType.FOURLEGGED);
+				villians[i][j] = new Villian(x, (game.screenHeight / 32) * 8, 50, Villian.VillianType.FOURLEGGED);
+				x += 100;
 			}
 		}
 		
-		x = 30;
+		x = game.screenCrop;
 
 		//front 2 rows
 		for(int i = 2; i < 5; i++)
 		{
 			for(int j = 0; j < villians[i].length; j++)
 			{
-				villians[i][j] = new Villian(x, 120, 25, Villian.VillianType.METROID);
+				villians[i][j] = new Villian(x, (game.screenHeight / 32) * 10, 25, Villian.VillianType.METROID);
+				x += 100;
 			}
 		}
 		
@@ -50,8 +52,7 @@ public class VillianManager
 		{
 			for(int j = 0; j < villians[i].length; j++)
 			{
-				System.out.println("i=" + i + " j=" + j);
-					game.add(villians[i][j]);
+				game.add(villians[i][j]);
 			}
 		}
 	}
@@ -149,7 +150,7 @@ public class VillianManager
 		}
 	}
 	
-	public Villian getVilShoot()
+	public void vilShoot()
 	{
 		for(int i = 0; i<villians.length; i++)
 		{
@@ -157,7 +158,10 @@ public class VillianManager
 			{
 				if((int) ((Math.random()*10)+1) == guess)
 				{
-					return villians[i][j];
+					if(villians[i][j] != null)
+					{
+						villians[i][j].fire();
+					}
 				}
 			}
 		}

@@ -73,6 +73,6 @@ public class Player extends JComponent
 	public void update()
 	{
 		this.setLocation(this.getX() + dX, inY);
-		System.out.print(this.getDx() + this.getX());
+//		System.out.print(this.getDx() + this.getX());
 	}
 }

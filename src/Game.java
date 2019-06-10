@@ -29,8 +29,10 @@ import javax.imageio.ImageIO;
 
 public class Game extends JFrame implements KeyListener, ActionListener
 {
-	final static int screenHeight = 1600;
-	final static int screenWidth = 1500;
+	final static int screenHeight = 1366;
+	final static int screenWidth = 768;
+	static int screenCrop = screenWidth / 16;
+	static int screenIncrement = (screenWidth - screenCrop) / 3;
 	private int point;
 	private Blocks block1;
 	private Blocks block2;
@@ -78,14 +80,17 @@ public class Game extends JFrame implements KeyListener, ActionListener
 		life3.setBounds(1395, 5, 100, 100);
 		add(life3);
 
-		block1 = new Blocks(150,1100);
+		//shield positions are based on a 'square' cut out
+		//of the screen then are placed into 1/3 increments in
+		//5/6 of the way down
+		block1 = new Blocks(screenCrop + screenIncrement, (screenHeight / 6) * 5);
 		add(block1);
-		block2 = new Blocks(600, 1100);
+		block2 = new Blocks(screenCrop + (screenIncrement * 2), (screenHeight / 6) * 5);
 		add(block2);
-		block3 = new Blocks(1050,1100);
+		block3 = new Blocks(screenCrop + (screenIncrement * 3), (screenHeight / 6) * 5);
 		add(block3);
 		
-		rocket = new Player(5,1295);
+		rocket = new Player(500, 300);
 		add(rocket);
 		
 		this.addKeyListener(new KeyListener() 
@@ -96,11 +101,11 @@ public class Game extends JFrame implements KeyListener, ActionListener
 			{
 				if (eT.getKeyCode() == KeyEvent.VK_LEFT)
 				{
-					rocket.setDx(-5);
+					rocket.setDx(-20);
 				}
 				if (eT.getKeyCode() == KeyEvent.VK_RIGHT)
 				{
-					rocket.setDx(5);
+					rocket.setDx(20);
 				}
 				if (eT.getKeyCode() == KeyEvent.VK_SPACE)
 				{
@@ -125,14 +130,11 @@ public class Game extends JFrame implements KeyListener, ActionListener
 		
 		VillianManager villianManager = new VillianManager(this);
 		
-		Timer t = new Timer(10,this);
+		Timer t = new Timer(2,this);
 		t.start();
 		
 		repaint();
 		revalidate();
-		
-		System.out.println(getClass());
-		getClass().getResourceAsStream("/");
 		
 		this.setVisible(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
