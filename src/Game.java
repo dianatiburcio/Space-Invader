@@ -29,8 +29,8 @@ import javax.imageio.ImageIO;
 
 public class Game extends JFrame implements KeyListener, ActionListener
 {
-	final static int screenHeight = 1366;
-	final static int screenWidth = 768;
+	final static int screenHeight = 768;
+	final static int screenWidth = 1366;
 	static int screenCrop = screenWidth / 16;
 	static int screenIncrement = (screenWidth - screenCrop) / 3;
 	private int point;
@@ -40,13 +40,14 @@ public class Game extends JFrame implements KeyListener, ActionListener
 	private Player rocket;
 	private int points;
 	private Bullet pew;
+	private VillianManager villianManager;
 	private ArrayList<Bullet> pewpew = new ArrayList<Bullet>();
 	JLabel pointNum = new JLabel("");
 	
 	public Game()
 	{
 		setLayout(null);
-		setBounds(200, 100, screenHeight, screenWidth);
+		setBounds(200, 100, screenWidth, screenHeight);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 		getContentPane().setBackground(Color.black);
@@ -90,7 +91,7 @@ public class Game extends JFrame implements KeyListener, ActionListener
 		block3 = new Blocks(screenCrop + (screenIncrement * 3), (screenHeight / 6) * 5);
 		add(block3);
 		
-		rocket = new Player(500, 300);
+		rocket = new Player(screenWidth / 2, 300);
 		add(rocket);
 		
 		this.addKeyListener(new KeyListener() 
@@ -128,7 +129,7 @@ public class Game extends JFrame implements KeyListener, ActionListener
 			}
 		});
 		
-		VillianManager villianManager = new VillianManager(this);
+		villianManager = new VillianManager(this);
 		
 		Timer t = new Timer(2,this);
 		t.start();
@@ -166,6 +167,8 @@ public class Game extends JFrame implements KeyListener, ActionListener
 				}	
 			}
 		}
+		
+		villianManager.UpdatePositions();
 		
 		repaint();
 	}
