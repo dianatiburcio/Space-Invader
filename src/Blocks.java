@@ -70,13 +70,11 @@ public class Blocks extends JComponent
 			}
 		}
 	}
-	
+	 
 	public boolean hit(Bullet b)
 	{
-		System.out.println("Hi");
-		System.out.println(b.getX()/this.getWidth()/14 + " " + b.getY()/this.getHeight()/30);
-		if(block[b.getX()/(this.getWidth()*14)][b.getY()/(this.getHeight()*30)] == false) {
-			block[b.getX()/(this.getWidth()*14)][b.getY()/(this.getHeight()*30)] = true;
+		if((b.getY() - this.getY())*30/(this.getHeight()) < 11 && (b.getX() - this.getX())*14/(this.getWidth()) < 11 && block[(b.getX() + 25 - this.getX())*14/(this.getWidth())][(b.getY() - this.getY())*30/(this.getHeight())] == false) {
+			block[(b.getX() + 25 - this.getX())*14/(this.getWidth())][(b.getY() - this.getY())*30/(this.getHeight())] = true;
 			return true;
 		}
 		return false;

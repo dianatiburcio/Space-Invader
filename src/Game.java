@@ -177,6 +177,7 @@ public class Game extends JFrame implements KeyListener, ActionListener
 			if(pew != null && pew.hit(a) && a.hit(pew))
 			{
 				remove(pew);
+				pew = null;
 			}
 		}
 		
