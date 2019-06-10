@@ -65,9 +65,9 @@ public class Player extends JComponent
 		return dX;
 	}
 	
-	public boolean bulletHit(int x, int y)
+	public boolean bulletHit(Bullet a, JComponent b) 
 	{
-		return bullet.hit(x, y);
+		return a.hit(b);
 	}
 	
 	public void update()

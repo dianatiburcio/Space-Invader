@@ -7,9 +7,9 @@ public class Blocks extends JComponent
 {
 	private boolean[][] block;
 	
-	public Blocks(int x, int y)
+	public Blocks()
 	{
-		setBounds(x,y,300,300);
+		setSize((int)(Game.screenWidth*(3.0/16)),(int)(Game.screenHeight / 5.0));
 		
 		block = new boolean[12][12];
 		block[0][0]= true;
@@ -49,7 +49,6 @@ public class Blocks extends JComponent
 		block[5][8]= true;
 		block[6][8]= true;
 		block[7][8]= true;
-		
 	}
 	
 	public void paintComponent(Graphics g) 
@@ -59,20 +58,27 @@ public class Blocks extends JComponent
 			for(int j=0; j<block[0].length; j++)
 			{
 				if(block[i][j] == false)
+				{
 					g.setColor(Color.GREEN);
-					g.fillRect(i*25, j*10, 25, 10);
+					g.fillRect((int) (i*(this.getWidth()/14)), (int) (j*(this.getHeight()/30)), (int)(this.getWidth()/14), (int)(this.getHeight()/30));
+				}
 				if(block[i][j] == true)
-					g.setColor(Color.BLACK);
-					g.fillRect(i*25, j*10, 25, 10);
+				{
+					g.setColor(new Color(0.0f, 0.0f, 0.0f, 0.0f));
+					g.fillRect((int) (i*(this.getWidth()/14)), (int) (j*(this.getHeight()/30)), (int) (this.getWidth()/14), (int) (this.getHeight()/30));
+				}
 			}
 		}
 	}
 	
-	public void hit(int x, int y)
+	public boolean hit(Bullet b)
 	{
-		if(block[x/25][y/10] == false)
-			block[x/25][y/10] = true;
+		System.out.println("Hi");
+		System.out.println(b.getX()/this.getWidth()/14 + " " + b.getY()/this.getHeight()/30);
+		if(block[b.getX()/(this.getWidth()*14)][b.getY()/(this.getHeight()*30)] == false) {
+			block[b.getX()/(this.getWidth()*14)][b.getY()/(this.getHeight()*30)] = true;
+			return true;
+		}
+		return false;
 	}
-	
-	
 }

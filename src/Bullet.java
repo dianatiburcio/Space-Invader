@@ -16,7 +16,7 @@ public class Bullet extends JComponent
 	{
 		this.setLocation(a.getX(), a.getY());
 		this.setSize(50,50);
-		bullet = new Ellipse2D.Double(25,0,20,20);
+		bullet = new Ellipse2D.Double(25,0,10,10);
 	}
 	
 	public void paintComponent(Graphics g)
@@ -41,9 +41,9 @@ public class Bullet extends JComponent
 		this.setLocation(this.getX() + dX, this.getY() + dY);  
 	}
 	
-	public boolean hit(int x, int y)
+	public boolean hit(JComponent ree)
 	{
-		if(this.getX() == x && this.getY() == this.getX())
+		if(this.getX()>ree.getX() && this.getX()<ree.getX()+ree.getWidth() && this.getY()>ree.getY() && this.getY()<ree.getY()+ree.getHeight())
 			return true;
 		else
 		{return false;}

@@ -29,19 +29,19 @@ import javax.imageio.ImageIO;
 
 public class Game extends JFrame implements KeyListener, ActionListener
 {
-	final static int screenHeight = 768;
-	final static int screenWidth = 1366;
+	final static int screenHeight = 1500;
+	final static int screenWidth = 1600;
 	static int screenCrop = screenWidth / 16;
 	static int screenIncrement = (screenWidth - screenCrop) / 3;
 	private int point;
 	private Blocks block1;
 	private Blocks block2;
 	private Blocks block3;
+	private ArrayList<Blocks> blocks = new ArrayList<Blocks>();
 	private Player rocket;
 	private int points;
-	private Bullet pew;
+	private Bullet pew = null;
 	private VillianManager villianManager;
-	private ArrayList<Bullet> pewpew = new ArrayList<Bullet>();
 	JLabel pointNum = new JLabel("");
 	
 	public Game()
@@ -84,14 +84,23 @@ public class Game extends JFrame implements KeyListener, ActionListener
 		//shield positions are based on a 'square' cut out
 		//of the screen then are placed into 1/3 increments in
 		//5/6 of the way down
-		block1 = new Blocks(screenCrop + screenIncrement, (screenHeight / 6) * 5);
+		
+		block1 = new Blocks();
+		block1.setLocation((int) (((screenWidth - (2*screenCrop) - (3*block1.getWidth()))/3) + screenCrop) , (int) (screenHeight - (screenHeight / 5) * 2));
+		blocks.add(block1);
 		add(block1);
-		block2 = new Blocks(screenCrop + (screenIncrement * 2), (screenHeight / 6) * 5);
+		
+		block2 = new Blocks();
+		block2.setLocation((int) ((((screenWidth - (2*screenCrop) - (3*block2.getWidth()))/3)*2) + screenCrop + block2.getWidth()), (int) (screenHeight -(screenHeight / 5) * 2));
+		blocks.add(block2);
 		add(block2);
-		block3 = new Blocks(screenCrop + (screenIncrement * 3), (screenHeight / 6) * 5);
+		
+		block3 = new Blocks();
+		block3.setLocation((int)((((screenWidth - (2*screenCrop) - (3*block3.getWidth()))/3)*3) + screenCrop + (2*block2.getWidth())), (int) (screenHeight -(screenHeight / 5) * 2));
+		blocks.add(block3);
 		add(block3);
 		
-		rocket = new Player(screenWidth / 2, 300);
+		rocket = new Player((int) (screenWidth / 2), (int) (screenHeight - (screenHeight / 8)));
 		add(rocket);
 		
 		this.addKeyListener(new KeyListener() 
@@ -110,9 +119,10 @@ public class Game extends JFrame implements KeyListener, ActionListener
 				}
 				if (eT.getKeyCode() == KeyEvent.VK_SPACE)
 				{
-					pew = new Bullet(rocket);
-					pewpew.add(pew);
-					add(pew);
+					if(pew == null) {
+						pew = new Bullet(rocket);
+						add(pew);
+					}
 				}
 			}
 			
@@ -131,7 +141,7 @@ public class Game extends JFrame implements KeyListener, ActionListener
 		
 		villianManager = new VillianManager(this);
 		
-		Timer t = new Timer(2,this);
+		Timer t = new Timer(1,this);
 		t.start();
 		
 		repaint();
@@ -155,20 +165,26 @@ public class Game extends JFrame implements KeyListener, ActionListener
 		
 		if(rocket.getX()+rocket.getDx()>= 0 && rocket.getX()+rocket.getDx()<= this.getWidth()-rocket.getWidth())
 			rocket.update();
-		if(!pewpew.isEmpty())
+		if(pew != null && pew.getY() < 0)
 		{
-			for(int i = 0; i<pewpew.size(); i++)
+			remove(pew);
+			pew = null;
+		}	
+		
+		for(int i = 0; i<blocks.size(); i++)
+		{
+			Blocks a = blocks.get(i);
+			if(pew != null && pew.hit(a) && a.hit(pew))
 			{
-				pewpew.get(i).update();
-				if(pewpew.get(i).getY() > this.getHeight())
-				{
-					remove(pewpew.get(i));
-					pewpew.remove(i);
-				}	
+				remove(pew);
 			}
 		}
 		
-		villianManager.UpdatePositions();
+		if(pew != null)
+			pew.update();
+		
+		
+		//villianManager.UpdatePositions();
 		
 		repaint();
 	}
