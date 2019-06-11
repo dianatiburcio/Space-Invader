@@ -18,6 +18,7 @@ public class Villian extends JComponent
 	private int before;
 	private int villianNum;
 	private Bullet pew;
+	private BufferedImage image;
 	
 	public enum VillianType
 	{
@@ -29,36 +30,24 @@ public class Villian extends JComponent
 		dX = 0;
 		dY = 0;
 		setBounds(x, y, 100, 100);
-//		this.setLocation(x,y);
-//		setSize(100, 100);
 		point = pNum;
 		this.villianType = villianType;
-		alive = true; 
-	}
-	
-	public void paintComponent(Graphics g)
-	{
-		Graphics2D g2 = (Graphics2D) g;
-		if(villianNum == 1)
-		{	
-			try {BufferedImage image = ImageIO.read(getClass().getResourceAsStream("villian1BS.png"));} 
-			catch (IOException e) {e.printStackTrace();}
-		}
+		alive = true;
 		
 		switch(villianType)
 		{
 			case SQUID:
-				try {BufferedImage image = ImageIO.read(getClass().getResourceAsStream("villian1BS.png"));} 
+				try {image = ImageIO.read(getClass().getResourceAsStream("villian1BS.png"));} 
 				catch (IOException e) {e.printStackTrace();}
 				break;
 				
 			case FOURLEGGED:
-				try {BufferedImage image = ImageIO.read(getClass().getResourceAsStream("villian2BS.png"));} 
+				try {image = ImageIO.read(getClass().getResourceAsStream("villian2BS.png"));} 
 				catch (IOException e) {e.printStackTrace();}
 				break;
 				
 			case METROID:
-				try {BufferedImage image = ImageIO.read(getClass().getResourceAsStream("villian3BS.png"));} 
+				try {image = ImageIO.read(getClass().getResourceAsStream("villian3BS.png"));} 
 				catch (IOException e) {e.printStackTrace();}
 				break;
 			
@@ -66,6 +55,12 @@ public class Villian extends JComponent
 				System.out.println("Villian doesn't have a type!");
 				break;
 		}
+	}
+	
+	public void paintComponent(Graphics g)
+	{
+		Graphics2D g2 = (Graphics2D) g;
+		g2.drawImage(image, 0, 0, null);
 	}
 	
 	
@@ -87,13 +82,30 @@ public class Villian extends JComponent
 	
 	public void fire()
 	{
-		
+		pew = new Bullet(this);
+		pew.setDy(5);
+		pew.setDx(0);
 	}
 	
-	public void update()
+	public void updateHorizontal()
 	{
-		this.setLocation(this.getX() + dX, this.getY() + dY);  
-		if(this.getY() == move + before) 
-			setDy(0);
+		this.setLocation(this.getX() + dX, this.getY()); 
+	}
+	
+	public void updateVertical()
+	{
+		this.setLocation(this.getX(), this.getY() + 5);
+	}
+	
+	public void updateBullet()
+	{
+		if(pew != null && pew.getY() < 0)
+		{
+			remove(pew);
+			pew = null;
+		}
+		
+		if(pew != null)
+			pew.update();
 	}
 }

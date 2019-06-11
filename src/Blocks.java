@@ -62,6 +62,7 @@ public class Blocks extends JComponent
 					g.setColor(Color.GREEN);
 					g.fillRect((int) (i*(this.getWidth()/14)), (int) (j*(this.getHeight()/30)), (int)(this.getWidth()/14), (int)(this.getHeight()/30));
 				}
+				
 				if(block[i][j] == true)
 				{
 					g.setColor(new Color(0.0f, 0.0f, 0.0f, 0.0f));
@@ -73,10 +74,13 @@ public class Blocks extends JComponent
 	 
 	public boolean hit(Bullet b)
 	{
-		if((b.getY() - this.getY())*30/(this.getHeight()) < 11 && (b.getX() - this.getX())*14/(this.getWidth()) < 11 && block[(b.getX() + 25 - this.getX())*14/(this.getWidth())][(b.getY() - this.getY())*30/(this.getHeight())] == false) {
-			block[(b.getX() + 25 - this.getX())*14/(this.getWidth())][(b.getY() - this.getY())*30/(this.getHeight())] = true;
-			return true;
-		}
+		if(	(b.getY() - this.getY())*30/(this.getHeight()) < 11 && 
+			(b.getX() - this.getX())*14/(this.getWidth()) < 11 &&
+			block[(b.getX() + 25 - this.getX())*14/(this.getWidth())][(b.getY() - this.getY())*30/(this.getHeight())] == false)
+			{
+				block[(b.getX() + 25 - this.getX())*14/(this.getWidth())][(b.getY() - this.getY())*30/(this.getHeight())] = true;
+				return true;
+			}
 		return false;
 	}
 }

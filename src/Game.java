@@ -29,8 +29,8 @@ import javax.imageio.ImageIO;
 
 public class Game extends JFrame implements KeyListener, ActionListener
 {
-	final static int screenHeight = 1500;
-	final static int screenWidth = 1600;
+	final static int screenHeight = 1080;
+	final static int screenWidth = 1920;
 	static int screenCrop = screenWidth / 16;
 	static int screenIncrement = (screenWidth - screenCrop) / 3;
 	private int point;
@@ -42,6 +42,7 @@ public class Game extends JFrame implements KeyListener, ActionListener
 	private int points;
 	private Bullet pew = null;
 	private VillianManager villianManager;
+	private int timeTotal = 0;
 	JLabel pointNum = new JLabel("");
 	
 	public Game()
@@ -70,15 +71,15 @@ public class Game extends JFrame implements KeyListener, ActionListener
 		catch (IOException e) {e.printStackTrace();}
 		
 		JLabel life1 = new JLabel(new ImageIcon(a));
-		life1.setBounds(1185, 5, 100, 100);
+		life1.setBounds((screenWidth / 16) * 12, 5, 100, 100);
 		add(life1);
 		
 		JLabel life2 = new JLabel(new ImageIcon(a));
-		life2.setBounds(1290, 5,100, 100);
+		life2.setBounds((screenWidth / 16) * 13, 5,100, 100);
 		add(life2);
 		
 		JLabel life3 = new JLabel(new ImageIcon(a));
-		life3.setBounds(1395, 5, 100, 100);
+		life3.setBounds((screenWidth / 16) * 14, 5, 100, 100);
 		add(life3);
 
 		//shield positions are based on a 'square' cut out
@@ -86,17 +87,17 @@ public class Game extends JFrame implements KeyListener, ActionListener
 		//5/6 of the way down
 		
 		block1 = new Blocks();
-		block1.setLocation((int) (((screenWidth - (2*screenCrop) - (3*block1.getWidth()))/3) + screenCrop) , (int) (screenHeight - (screenHeight / 5) * 2));
+		block1.setLocation((int) (((screenWidth - (2*screenCrop) - (3*block1.getWidth()))/3) + screenCrop) , (int) (screenHeight - (screenHeight / 8) * 2));
 		blocks.add(block1);
 		add(block1);
 		
 		block2 = new Blocks();
-		block2.setLocation((int) ((((screenWidth - (2*screenCrop) - (3*block2.getWidth()))/3)*2) + screenCrop + block2.getWidth()), (int) (screenHeight -(screenHeight / 5) * 2));
+		block2.setLocation((int) ((((screenWidth - (2*screenCrop) - (3*block2.getWidth()))/3)*2) + screenCrop + block2.getWidth()), (int) (screenHeight -(screenHeight / 8) * 2));
 		blocks.add(block2);
 		add(block2);
 		
 		block3 = new Blocks();
-		block3.setLocation((int)((((screenWidth - (2*screenCrop) - (3*block3.getWidth()))/3)*3) + screenCrop + (2*block2.getWidth())), (int) (screenHeight -(screenHeight / 5) * 2));
+		block3.setLocation((int)((((screenWidth - (2*screenCrop) - (3*block3.getWidth()))/3)*3) + screenCrop + (2*block2.getWidth())), (int) (screenHeight -(screenHeight / 8) * 2));
 		blocks.add(block3);
 		add(block3);
 		
@@ -111,11 +112,11 @@ public class Game extends JFrame implements KeyListener, ActionListener
 			{
 				if (eT.getKeyCode() == KeyEvent.VK_LEFT)
 				{
-					rocket.setDx(-20);
+					rocket.setDx(-10);
 				}
 				if (eT.getKeyCode() == KeyEvent.VK_RIGHT)
 				{
-					rocket.setDx(20);
+					rocket.setDx(10);
 				}
 				if (eT.getKeyCode() == KeyEvent.VK_SPACE)
 				{
@@ -162,7 +163,7 @@ public class Game extends JFrame implements KeyListener, ActionListener
 	
 	public void actionPerformed(ActionEvent arg0) 
 	{
-		
+		timeTotal += 1;
 		if(rocket.getX()+rocket.getDx()>= 0 && rocket.getX()+rocket.getDx()<= this.getWidth()-rocket.getWidth())
 			rocket.update();
 		if(pew != null && pew.getY() < 0)
@@ -184,8 +185,11 @@ public class Game extends JFrame implements KeyListener, ActionListener
 		if(pew != null)
 			pew.update();
 		
-		
-		//villianManager.UpdatePositions();
+		if(timeTotal % 500 == 0) //villians should only update at a certain increment
+		{
+			villianManager.UpdatePositions();
+			villianManager.vilShoot();
+		}
 		
 		repaint();
 	}

@@ -1,8 +1,8 @@
 public class VillianManager
 {
 	Villian[][] villians;
-	boolean moveLeft;
-	boolean moveRight;
+	boolean moveLeft = true;
+	boolean moveRight = false;
 	Game game;
 	private boolean alive = true;
 	int guess = 6;
@@ -12,42 +12,52 @@ public class VillianManager
 		villians = new Villian[5][11];
 		this.game = game;
 		
-		int x = game.screenCrop;
+		int x = Game.screenCrop;
 		
 		//back row
-		for(int i = 0; i < 2; i++)
+		for(int j = 0; j < villians[0].length; j++)
 		{
-			for(int j = 0; j < villians[i].length; j++)
-			{
-				villians[i][j] = new Villian(x, (game.screenHeight / 32) * 6, 100, Villian.VillianType.SQUID);
-				x += 100;
-			}
+			villians[0][j] = new Villian(x, (Game.screenHeight / 32) * 5, 100, Villian.VillianType.SQUID);
+			x += 150;
 		}
 		
-		x = game.screenCrop;
+		x = Game.screenCrop;
 		
-		//middle 2 rows
-		for(int i = 1; i < 3; i++)
+		//second row
+		for(int j = 0; j < villians[0].length; j++)
 		{
-			for(int j = 0; j < villians[i].length; j++)
-			{
-				villians[i][j] = new Villian(x, (game.screenHeight / 32) * 8, 50, Villian.VillianType.FOURLEGGED);
-				x += 100;
-			}
+			villians[1][j] = new Villian(x, (Game.screenHeight / 32) * 8, 50, Villian.VillianType.FOURLEGGED);
+			x += 150;
 		}
 		
-		x = game.screenCrop;
+		x = Game.screenCrop;
 
-		//front 2 rows
-		for(int i = 2; i < 5; i++)
+		//third row
+		for(int j = 0; j < villians[0].length; j++)
 		{
-			for(int j = 0; j < villians[i].length; j++)
-			{
-				villians[i][j] = new Villian(x, (game.screenHeight / 32) * 10, 25, Villian.VillianType.METROID);
-				x += 100;
-			}
+			villians[2][j] = new Villian(x, (Game.screenHeight / 32) * 11, 50, Villian.VillianType.FOURLEGGED);
+			x += 150;
 		}
 		
+		x = Game.screenCrop;
+		
+		//fourth row
+		for(int j = 0; j < villians[0].length; j++)
+		{
+			villians[3][j] = new Villian(x, (Game.screenHeight / 32) * 14, 25, Villian.VillianType.METROID);
+			x += 150;
+		}
+		
+		x = Game.screenCrop;
+		
+		//front row
+		for(int j = 0; j < villians[0].length; j++)
+		{
+			villians[4][j] = new Villian(x, (Game.screenHeight / 32) * 17, 25, Villian.VillianType.METROID);
+			x += 150;
+		}
+		
+		//fill all rows		
 		for(int i = 0; i < villians.length; i++)
 		{
 			for(int j = 0; j < villians[i].length; j++)
@@ -66,11 +76,16 @@ public class VillianManager
 			{
 				if(checkColumnContainsEnemy(i))
 				{
-					if(isPastLeftWall(i))
+					if(isPastRightWall(i))
 					{
 						moveLeft = false;
 						moveRight = true;
-						//shift everyone down
+						shiftDown();
+					}
+					
+					else
+					{
+						shiftLeft();
 					}
 				}
 			}
@@ -78,15 +93,33 @@ public class VillianManager
 		
 		if(moveRight)
 		{
-			for(int i = villians[0].length; i > 0; i--)
+			for(int i = villians[0].length - 1; i > 0; i--)
 			{
 				if(checkColumnContainsEnemy(i))
 				{
 					if(isPastLeftWall(i))
 					{
-						moveLeft = false;
-						moveRight = true;
+						moveLeft = true;
+						moveRight = false;
+						shiftDown();
 					}
+					
+					else
+					{
+						shiftRight();
+					}
+				}
+			}
+		}
+		
+		for(int i = 0; i < villians.length; i++)
+		{
+			for(int j = 0; j < villians[i].length; j++)
+			{
+				if(villians[i][j] != null)
+				{
+					villians[i][j].updateHorizontal();
+					villians[i][j].updateBullet();
 				}
 			}
 		}
@@ -94,22 +127,22 @@ public class VillianManager
 	
 	public boolean checkColumnContainsEnemy(int column)
 	{
-		for(int i = 0; i < villians.length; i++)
+		for(int row = 0; row < villians.length; row++)
 		{
-			if(villians[i][column] != null) return true;
+			if(villians[row][column] != null) return true;
 		}
 		
 		return false;
 	}
 	
-	public boolean isPastLeftWall(int column)
+	public boolean isPastRightWall(int column)
 	{
 		//wall collision check
 		for(int r = 0; r < villians.length; r++)
 		{
 			for(Villian villian : villians[r])
 			{
-				if(villian.getX() > Game.screenWidth)
+				if(villian.getX() > Game.screenWidth - villian.getWidth())
 				{
 					return true;
 				}
@@ -119,7 +152,7 @@ public class VillianManager
 		return false;
 	}
 	
-	public boolean isPastRightWall(int column)
+	public boolean isPastLeftWall(int column)
 	{
 		//wall collision check
 		for(int r = 0; r < villians.length; r++)
@@ -144,7 +177,39 @@ public class VillianManager
 			{
 				if(villians[i][j] != null)
 				{
-					villians[i][j].setDy(10);
+					villians[i][j].updateVertical();
+				}
+			}
+		}
+	}
+	
+	public void shiftRight()
+	{
+		{
+			for(int i = 0; i < villians.length; i++)
+			{
+				for(int j = 0; j < villians[i].length; j++)
+				{
+					if(villians[i][j] != null)
+					{
+						villians[i][j].setDx(-20);
+					}
+				}
+			}
+		}
+	}
+	
+	public void shiftLeft()
+	{
+		{
+			for(int i = 0; i < villians.length; i++)
+			{
+				for(int j = 0; j < villians[i].length; j++)
+				{
+					if(villians[i][j] != null)
+					{
+						villians[i][j].setDx(20);
+					}
 				}
 			}
 		}
@@ -165,6 +230,8 @@ public class VillianManager
 				}
 			}
 		}
+		
+		
 	}
 	
 	public void KillVillian(Bullet pew)
@@ -180,10 +247,5 @@ public class VillianManager
 			}
 		}
 		game.updatePoints();
-	}
-	
-	public void update()
-	{
-		
 	}
 }

@@ -42,7 +42,6 @@ public class Player extends JComponent
 		try {BufferedImage image = ImageIO.read(getClass().getResourceAsStream("RocketSadBlackUp.png"));
 		g2.drawImage(image, 0, 0, null);} 
 		catch (IOException e) {e.printStackTrace();}
-		
 	}
 	
 	public void addPoints(int a)
@@ -73,6 +72,5 @@ public class Player extends JComponent
 	public void update()
 	{
 		this.setLocation(this.getX() + dX, inY);
-//		System.out.print(this.getDx() + this.getX());
 	}
 }
